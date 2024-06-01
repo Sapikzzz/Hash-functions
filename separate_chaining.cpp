@@ -6,15 +6,15 @@
 #include <vector>
 #include "separate_chaining.h"
 
-HashTable::HashTable(int size) {
+scTable::scTable(int size) {
     table = std::vector<Node*>(size, nullptr);
 }
 
-int HashTable::hashFunction(int key) {
-    return key % table.size();
+int scTable::hashFunction(int key) {
+    return key % table.size();  // modulo wielkosci tablicy, aby nie wyjsc poza zakres stworzonej tablicy
 }
 
-void HashTable::insert(int key) {
+void scTable::insert(int key) {
     int index = hashFunction(key);  // Obliczenie indeksu
     Node* newNode = new Node(key);
 
@@ -29,7 +29,7 @@ void HashTable::insert(int key) {
     }
 }
 
-bool HashTable::deleteKey(int key) {
+bool scTable::deleteKey(int key) {
     int index = hashFunction(key);
     Node* temp = table[index];
     Node* prev = nullptr;
@@ -53,7 +53,7 @@ bool HashTable::deleteKey(int key) {
     return true;
 }
 
-void HashTable::display() {
+void scTable::display() {
     for(int i = 0; i < table.size(); i++) {
         std::cout << i << ": ";
         Node* temp = table[i];

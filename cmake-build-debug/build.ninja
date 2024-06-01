@@ -61,6 +61,18 @@ build CMakeFiles/Hash_functions.dir/separate_chaining.cpp.o: CXX_COMPILER__Hash_
   OBJECT_DIR = CMakeFiles/Hash_functions.dir
   OBJECT_FILE_DIR = CMakeFiles/Hash_functions.dir
 
+build CMakeFiles/Hash_functions.dir/open_addressing.cpp.o: CXX_COMPILER__Hash_functions_unscanned_Debug /Users/sapik/CLionProjects/hash_functions/Hash-functions/open_addressing.cpp || cmake_object_order_depends_target_Hash_functions
+  DEP_FILE = CMakeFiles/Hash_functions.dir/open_addressing.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/Hash_functions.dir
+  OBJECT_FILE_DIR = CMakeFiles/Hash_functions.dir
+
+build CMakeFiles/Hash_functions.dir/cuckoo_hashing.cpp.o: CXX_COMPILER__Hash_functions_unscanned_Debug /Users/sapik/CLionProjects/hash_functions/Hash-functions/cuckoo_hashing.cpp || cmake_object_order_depends_target_Hash_functions
+  DEP_FILE = CMakeFiles/Hash_functions.dir/cuckoo_hashing.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/Hash_functions.dir
+  OBJECT_FILE_DIR = CMakeFiles/Hash_functions.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Hash_functions
@@ -69,7 +81,7 @@ build CMakeFiles/Hash_functions.dir/separate_chaining.cpp.o: CXX_COMPILER__Hash_
 #############################################
 # Link the executable Hash_functions
 
-build Hash_functions: CXX_EXECUTABLE_LINKER__Hash_functions_Debug CMakeFiles/Hash_functions.dir/main.cpp.o CMakeFiles/Hash_functions.dir/separate_chaining.cpp.o
+build Hash_functions: CXX_EXECUTABLE_LINKER__Hash_functions_Debug CMakeFiles/Hash_functions.dir/main.cpp.o CMakeFiles/Hash_functions.dir/separate_chaining.cpp.o CMakeFiles/Hash_functions.dir/open_addressing.cpp.o CMakeFiles/Hash_functions.dir/cuckoo_hashing.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/Hash_functions.dir
   POST_BUILD = :

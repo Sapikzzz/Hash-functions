@@ -15,12 +15,12 @@ struct Node {   // Node dla listy jednokierunkowej
     Node(int value) : data(value), next(nullptr) {}
 };
 
-class HashTable {
+class scTable {
 private:
     std::vector<Node*> table;   // Vector wskaźników, pojemniki na listy
     int size;
 public:
-    HashTable(int size);    // Konstruktor używany do inicjalizacji tablicy o podanej wielkosci
+    scTable(int size);    // Konstruktor używany do inicjalizacji tablicy o podanej wielkosci
     int hashFunction(int key);  // Funkcja obliczająca indeks na podstawie wielkosci tablicy
     void insert(int key);
     bool deleteKey(int key);
