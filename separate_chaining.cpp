@@ -2,66 +2,66 @@
 // Created by Jakub Sap on 01/06/2024.
 //
 
+#include <iostream>
+#include <vector>
 #include "separate_chaining.h"
 
-// Write code for the SeparateChaining class here
-
-template <typename T>
-SeparateChaining<T>::SeparateChaining() {
-    // Initialize the hash table
-    table.resize(10);
+HashTable::HashTable(int size) {
+    table = std::vector<Node*>(size, nullptr);
 }
 
-template <typename T>
-SeparateChaining<T>::SeparateChaining(int size) {
-    // Initialize the hash table
-    table.resize(size);
+int HashTable::hashFunction(int key) {
+    return key % table.size();
 }
 
-template <typename T>
-void SeparateChaining<T>::insert(T key) {
-    // Get the hash value of the key
-    int index = hash(key);
+void HashTable::insert(int key) {
+    int index = hashFunction(key);  // Obliczenie indeksu
+    Node* newNode = new Node(key);
 
-    // Insert the key into the list at the hash value
-    table[index].push_back(key);
+    if(table[index] == nullptr) {
+        table[index] = newNode;
+    } else {
+        Node* temp = table[index];
+        while(temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
 }
 
-template <typename T>
-bool SeparateChaining<T>::search(T key) {
-    // Get the hash value of the key
-    int index = hash(key);
+bool HashTable::deleteKey(int key) {
+    int index = hashFunction(key);
+    Node* temp = table[index];
+    Node* prev = nullptr;
 
-    // Search for the key in the list at the hash value
-    auto it = std::find(table[index].begin(), table[index].end(), key);
+    while(temp != nullptr && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
 
-    // Return true if the key is found, false otherwise
-    return it != table[index].end();
+    if(temp == nullptr) {
+        return false;
+    }
+
+    if(prev == nullptr) {
+        table[index] = temp->next;
+    } else {
+        prev->next = temp->next;
+    }
+
+    delete temp;
+    return true;
 }
 
-template <typename T>
-void SeparateChaining<T>::remove(T key) {
-    // Get the hash value of the key
-    int index = hash(key);
-
-    // Remove the key from the list at the hash value
-    table[index].remove(key);
-}
-
-template <typename T>
-void SeparateChaining<T>::display() {
-    // Iterate over each list in the table
-    for (int i = 0; i < table.size(); i++) {
+void HashTable::display() {
+    for(int i = 0; i < table.size(); i++) {
         std::cout << i << ": ";
-        for (auto it = table[i].begin(); it != table[i].end(); it++) {
-            std::cout << *it << " ";
+        Node* temp = table[i];
+        while(temp != nullptr) {
+            std::cout << temp->data << " ";
+            temp = temp->next;
         }
         std::cout << std::endl;
     }
 }
 
-template <typename T>
-int SeparateChaining<T>::hash(T key) {
-    // Use the modulo operator to get the hash value
-    return key % table.size();
-}

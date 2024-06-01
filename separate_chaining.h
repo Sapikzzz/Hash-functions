@@ -5,27 +5,27 @@
 #ifndef SEPARATE_CHAINING_H
 #define SEPARATE_CHAINING_H
 
-// Write code for the SeparateChaining class here
-
-#include <iostream>
 #include <vector>
 #include <list>
-#include <algorithm>
-#include <cmath>
-#include <stdexcept>
 
-template <typename T>
-class SeparateChaining {
-public:
-    SeparateChaining();
-    SeparateChaining(int size);
-    void insert(T key);
-    bool search(T key);
-    void remove(T key);
-    void display();
+struct Node {   // Node dla listy jednokierunkowej
+    int data;
+    Node* next;
+
+    Node(int value) : data(value), next(nullptr) {}
+};
+
+class HashTable {
 private:
-    std::vector<std::list<T>> table;
-    int hash(T key);
+    std::vector<Node*> table;   // Vector wskaźników, pojemniki na listy
+    int size;
+public:
+    HashTable(int size);    // Konstruktor używany do inicjalizacji tablicy o podanej wielkosci
+    int hashFunction(int key);  // Funkcja obliczająca indeks na podstawie wielkosci tablicy
+    void insert(int key);
+    bool deleteKey(int key);
+    void display();
+
 };
 
 #endif //SEPARATE_CHAINING_H
