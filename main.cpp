@@ -1,6 +1,11 @@
 #include <iostream>
+#include "separate_chaining.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    SeparateChaining<int> sc(5);
+
+
+
+
     return 0;
 }

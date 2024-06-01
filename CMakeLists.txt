@@ -3,4 +3,6 @@ project(Hash_functions)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Hash_functions main.cpp)
+add_executable(Hash_functions main.cpp
+        separate_chaining.cpp
+        separate_chaining.h)

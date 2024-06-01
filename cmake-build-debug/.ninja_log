@@ -1,0 +1,8 @@
+# ninja log v5
+2	311	1717203596293047879	CMakeFiles/Hash_functions.dir/main.cpp.o	cf73344040040a02
+3	41	1717203674174150175	build.ninja	e94c6ccfa47dcb60
+1	422	1717203416397704490	CMakeFiles/Hash_functions.dir/separate_chaining.cpp.o	736e914e27079d07
+2	318	1717203713447744294	CMakeFiles/Hash_functions.dir/main.cpp.o	cf73344040040a02
+2	330	1717203720059713336	CMakeFiles/Hash_functions.dir/main.cpp.o	cf73344040040a02
+330	354	1717203720084820165	Hash_functions	b67a9e9cf74e7a00
+3	322	1717203738066200478	CMakeFiles/Hash_functions.dir/main.cpp.o	cf73344040040a02
