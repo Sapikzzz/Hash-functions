@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.28"
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Hash_functions::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Hash_functions-Debug-643c1debbcd53207fbe2.json",
+					"jsonFile" : "target-Hash_functions-Debug-fe87aa5cccc602aacd3c.json",
 					"name" : "Hash_functions",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/sapik/CLionProjects/hash_functions/Hash-functions/cmake-build-debug",
-		"source" : "/Users/sapik/CLionProjects/hash_functions/Hash-functions"
+		"build" : "E:/Strukturki/Hash-functions/cmake-build-debug",
+		"source" : "E:/Strukturki/Hash-functions"
 	},
 	"version" : 
 	{

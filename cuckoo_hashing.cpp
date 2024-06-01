@@ -20,27 +20,29 @@ int CuckooHash::hashFunction(int key, int i) const {
 }
 
 bool CuckooHash::rehash() {
-    std::vector<int> oldKeys;
+    // Create a new table with double the size
+    std::vector<std::vector<int>> newTable(numHashFunctions);
+    for (int i = 0; i < numHashFunctions; i++) {
+        newTable[i].resize(table[i].size() * 2);
+    }
+
+    // Copy the keys from the old table to the new table
     for (int i = 0; i < numHashFunctions; i++) {
         for (int j = 0; j < table[i].size(); j++) {
             if (table[i][j] != -1) {
-                oldKeys.push_back(table[i][j]);
+                for (int k = 0; k < numHashFunctions; k++) {
+                    int index = hashFunction(table[i][j], k);
+                    if (newTable[k][index] == -1) {
+                        newTable[k][index] = table[i][j];
+                        break;
+                    }
+                }
             }
         }
     }
 
-    // Create a new table with double the capacity
-    std::vector<std::vector<int>> newTable(numHashFunctions, std::vector<int>(table[0].size() * 2, -1));
-    size = 0;
-
-    // Re-insert all keys into the new table
-    for (int key : oldKeys) {
-        if (!insert(key)) {
-            return false; // Failed to rehash
-        }
-    }
-
-    table.swap(newTable);
+    // Replace the old table with the new table
+    table = newTable;
     return true;
 }
 
