@@ -18,8 +18,7 @@ private:
 public:
     oaTable(int capacity);
     void insert(int key);
-    bool search(int key);
-    bool deleteKey(int key);
+    void deleteKey(int key);
     void display();
 };
 

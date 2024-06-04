@@ -6,16 +6,17 @@
 #include <vector>
 #include "separate_chaining.h"
 
+
 scTable::scTable(int size) {
     table = std::vector<Node*>(size, nullptr);
 }
 
 int scTable::hashFunction(int key) {
-    return key % table.size();  // modulo wielkosci tablicy, aby nie wyjsc poza zakres stworzonej tablicy
+    return key % table.size();
 }
 
 void scTable::insert(int key) {
-    int index = hashFunction(key);  // Obliczenie indeksu
+    int index = hashFunction(key);
     Node* newNode = new Node(key);
 
     if(table[index] == nullptr) {
@@ -29,7 +30,7 @@ void scTable::insert(int key) {
     }
 }
 
-bool scTable::deleteKey(int key) {
+void scTable::deleteKey(int key) {
     int index = hashFunction(key);
     Node* temp = table[index];
     Node* prev = nullptr;
@@ -40,7 +41,8 @@ bool scTable::deleteKey(int key) {
     }
 
     if(temp == nullptr) {
-        return false;
+        std::cout << "Key not found" << std::endl;
+        return;
     }
 
     if(prev == nullptr) {
@@ -50,7 +52,6 @@ bool scTable::deleteKey(int key) {
     }
 
     delete temp;
-    return true;
 }
 
 void scTable::display() {

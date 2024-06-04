@@ -17,15 +17,14 @@ struct Node {   // Node dla listy jednokierunkowej
 
 class scTable {
 private:
-    std::vector<Node*> table;   // Vector wskaźników, pojemniki na listy
+    std::vector<Node*> table;
     int size;
 public:
     scTable(int size);    // Konstruktor używany do inicjalizacji tablicy o podanej wielkosci
     int hashFunction(int key);  // Funkcja obliczająca indeks na podstawie wielkosci tablicy
     void insert(int key);
-    bool deleteKey(int key);
+    void deleteKey(int key);
     void display();
-
 };
 
 #endif //SEPARATE_CHAINING_H

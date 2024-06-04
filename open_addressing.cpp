@@ -33,41 +33,23 @@ void oaTable::insert(int key) {
 }
 
 
-bool oaTable::search(int key) {
+void oaTable::deleteKey(int key) {
     int index = hashFunction(key);
     int probe = 0;
 
     // Linear probing
     while (table[(index + probe) % capacity] != -1) {
         if (table[(index + probe) % capacity] == key) {
-            return true;  // Key found
-        }
-        probe++;
-    }
-
-    return false;  // Key not found
-}
-
-bool oaTable::deleteKey(int key) {
-    int index = hashFunction(key);
-    int probe = 0;
-
-    // Linear probing
-    while (table[(index + probe) % capacity] != -1) {
-        if (table[(index + probe) % capacity] == key) {
-            table[(index + probe) % capacity] = -2;  // Mark as deleted
+            table[(index + probe) % capacity] = -2;
             size--;
-            return true;  // Key deleted
         }
         probe++;
     }
 
-    return false;  // Key not found
 }
 
 void oaTable::display() {
     for (int i = 0; i < capacity; i++) {
-        std::cout << table[i] << " ";
+        std::cout << i << ": " << table[i] << std::endl;
     }
-    std::cout << std::endl;
 }

@@ -7,23 +7,25 @@
 
 #include <vector>
 
-const int MAX_ITERATIONS = 1000;
 
 class CuckooHash {
 private:
     std::vector<std::vector<int>> table;
-    int size;
-    int numHashFunctions;
+    int num_buckets;
 
-    int hashFunction(int key, int i) const;
-    bool rehash();
+    int hash1(int key) const;
+    int hash2(int key) const;
+    int insert_helper(int key, unsigned int loop_count);
+
+    int MAX_LOOPS = 50;
 
 public:
-    CuckooHash(int capacity, int numHashFunctions);
-    void insert(int key);
-    bool search(int key);
-    bool deleteKey(int key);
-    void display();
+    CuckooHash(unsigned int size);
+    ~CuckooHash();
+
+    int insert(int key);
+    int remove(int key);
+    void display() const;
 };
 
 #endif //CUCKOO_HASHING_H

@@ -9,4 +9,5 @@ add_executable(Hash_functions main.cpp
         open_addressing.cpp
         open_addressing.h
         cuckoo_hashing.cpp
-        cuckoo_hashing.h)
+        cuckoo_hashing.h
+)

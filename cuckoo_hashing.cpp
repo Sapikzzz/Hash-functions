@@ -6,110 +6,85 @@
 #include <iostream>
 #include <random>
 
-CuckooHash::CuckooHash(int capacity, int numHashFunctions): size(0), numHashFunctions(numHashFunctions) {
-    table.resize(numHashFunctions);
-    for (int i = 0; i < numHashFunctions; i++) {
-        table[i].resize(capacity);
-    }
+CuckooHash::CuckooHash(unsigned int size)
+        : table(2, std::vector<int>(size, -1)), num_buckets(size) {}
+
+CuckooHash::~CuckooHash() {}
+
+int CuckooHash::insert(int key) {
+    return insert_helper(key, 0);
 }
 
-int CuckooHash::hashFunction(int key, int i) const {
-    // Simple hash function: key % table size
-    // In practice, use better hash functions
-    return (key + i) % table[i].size();
-}
+int CuckooHash::remove(int key) {
+    unsigned int hash1_val = hash1(key);
+    unsigned int hash2_val = hash2(key);
 
-bool CuckooHash::rehash() {
-    // Create a new table with double the size
-    std::vector<std::vector<int>> newTable(numHashFunctions);
-    for (int i = 0; i < numHashFunctions; i++) {
-        newTable[i].resize(table[i].size() * 2);
+    if (table[0][hash1_val] == key) {
+        table[0][hash1_val] = -1;
+        return 0; // Key removed successfully
     }
 
-    // Copy the keys from the old table to the new table
-    for (int i = 0; i < numHashFunctions; i++) {
-        for (int j = 0; j < table[i].size(); j++) {
-            if (table[i][j] != -1) {
-                for (int k = 0; k < numHashFunctions; k++) {
-                    int index = hashFunction(table[i][j], k);
-                    if (newTable[k][index] == -1) {
-                        newTable[k][index] = table[i][j];
-                        break;
-                    }
-                }
-            }
+    if (table[1][hash2_val] == key) {
+        table[1][hash2_val] = -1;
+        return 0; // Key removed successfully
+    }
+
+    return -2; // Key not found
+}
+
+int CuckooHash::hash1(int key) const {
+    return key % num_buckets;
+}
+
+int CuckooHash::hash2(int key) const {
+    return (key / num_buckets) % num_buckets;
+}
+
+int CuckooHash::insert_helper(int key, unsigned int loop_count) {
+    if (loop_count > MAX_LOOPS)
+        return -1; // Maximum iterations reached, could not insert key
+
+    unsigned int hash1_val = hash1(key);
+    unsigned int hash2_val = hash2(key);
+
+    if (table[0][hash1_val] == key || table[1][hash2_val] == key) {
+        return 0; // Key already present
+    }
+
+    if (table[0][hash1_val] == -1) {
+        table[0][hash1_val] = key;
+        return 0; // Key inserted successfully
+    }
+
+    if (table[1][hash2_val] == -1) {
+        table[1][hash2_val] = key;
+        return 0; // Key inserted successfully
+    }
+
+    // Displace existing key and place the new key in its place
+    int displaced_key = table[0][hash1_val];
+    table[0][hash1_val] = key;
+
+    // Try to insert the displaced key in the other table
+    return insert_helper(displaced_key, loop_count + 1);
+}
+
+void CuckooHash::display() const {
+    std::cout << "Table 1:" << std::endl;
+    for (unsigned int i = 0; i < num_buckets; ++i) {
+        if (table[0][i] == -1) {
+            std::cout << "[" << i << "]: " << "empty" << std::endl;
+        } else {
+            std::cout << "[" << i << "]: " << table[0][i] << std::endl;
         }
     }
 
-    // Replace the old table with the new table
-    table = newTable;
-    return true;
-}
-
-void CuckooHash::insert(int key) {
-    int i = 0;
-    while (i < MAX_ITERATIONS) {
-        for (int j = 0; j < numHashFunctions; j++) {
-            int index = hashFunction(key, j);
-            if (table[j][index] == -1) {
-                table[j][index] = key;
-                size++;
-                return;
-            }
+    std::cout << "Table 2:" << std::endl;
+    for (unsigned int i = 0; i < num_buckets; ++i) {
+        if (table[1][i] == -1) {
+            std::cout << "[" << i << "]: " << "empty" << std::endl;
+        } else {
+            std::cout << "[" << i << "]: " << table[1][i] << std::endl;
         }
-
-        // Displace an existing key and insert the new key
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, numHashFunctions - 1);
-        int r = dis(gen);
-        int index = hashFunction(key, r);
-        int displacedKey = table[r][index];
-        table[r][index] = key;
-        key = displacedKey;
-        i++;
-    }
-
-    // Failed to insert after MAX_PROBES, rehash the table
-    if (rehash()) {
-        insert(key);
-    } else {
-        std::cout << "Failed to insert " << key << std::endl;
-    }
-}
-
-bool CuckooHash::search(int key) {
-    for (int i = 0; i < numHashFunctions; i++) {
-        int index = hashFunction(key, i);
-        if (table[i][index] == key) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool CuckooHash::deleteKey(int key) {
-    for (int i = 0; i < numHashFunctions; i++) {
-        int index = hashFunction(key, i);
-        if (table[i][index] == key) {
-            table[i][index] = -1;
-            size--;
-            return true;
-        }
-    }
-    return false;
-}
-
-void CuckooHash::display() {
-    for (int i = 0; i < numHashFunctions; i++) {
-        std::cout << "Table " << i << ": ";
-        for (int j = 0; j < table[i].size(); j++) {
-            if (table[i][j] == -1) {
-                std::cout << "- ";
-            } else {
-                std::cout << table[i][j] << " ";
-            }
-        }
-        std::cout << std::endl;
     }
 }
