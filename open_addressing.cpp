@@ -32,6 +32,7 @@ void oaTable::insert(int key) {
     size++;
 }
 
+
 bool oaTable::search(int key) {
     int index = hashFunction(key);
     int probe = 0;
